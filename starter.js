@@ -1,23 +1,34 @@
 const puppeteer = require('puppeteer');
 const db = require('./controller');
+var PropertiesReader = require('properties-reader');
+var properties = PropertiesReader('properties.file');
 
-const lottomaticaURL = 'https://www.lottomatica.it/';
-const premiomattoURL = 'https://www.lottomatica.it/skill/giochi-skill/scopa-premio-matto';
+const USERNAME = properties.get('username');
+const PASSWORD = properties.get('password');
+const lottomaticaURL = properties.get('lottomaticaURL');
+const premiomattoURL = properties.get('premiomattoURL');
+const executablePath = properties.get('executablePath');
+const headless = properties.get('headless');
 
+console.log(lottomaticaURL);
 
 (async () => {
-    const browser = await puppeteer.launch({headless: false})
+    let browser = null;
+    if(executablePath == '')
+      browser = await puppeteer.launch({headless: headless})
+    else
+      browser = await puppeteer.launch({headless: headless, executablePath: executablePath})
     const page = await browser.newPage()
     await page.goto(lottomaticaURL)
     await Promise.all([
         page.click('#login-button'),
         page.waitForSelector('form[name="loginForm"]')
         ]);
-    await page.type('input[name="gkl"]', 'zipzero0');
-    await page.type('input[name="gkp"]', 'Dente74383')
+    await page.type('input[name="gkl"]', USERNAME);
+    await page.type('input[name="gkp"]', PASSWORD)
     await page.click('#signin-button');
     await page.waitForNavigation({waitUntil: 'load'});
-    
+    browser.close();
     await page.goto(premiomattoURL,{
         timeout: 3000000
     });
