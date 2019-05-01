@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const db = require('./controller');
 
-var SkillUrl = 'https://cardgames.lottomatica.it/skill/lobby/lobby.php?codice_conto=0003459677&user=508319&accesso=hrJkqUZaZcie8sLU&ultimo_login=2019-04-28+08%3A33%3A54&conc=LOTTOMATICA&id_network=1&prodotto=skill&mod=M&gioco=SC&skin=LOTTOMATICA&tipo=P&lang=it&canale=web';
+var SkillUrl = 'https://cardgames.lottomatica.it/skill/lobby/lobby.php?codice_conto=0003459677&user=508319&accesso=KthRqkbm9PC2zTkm&ultimo_login=2019-05-01+17%3A53%3A30&conc=LOTTOMATICA&id_network=1&prodotto=skill&mod=M&gioco=SC&skin=LOTTOMATICA&tipo=P&lang=it&canale=web';
 
 (async () => {
   const browser = await puppeteer.launch({headless: false});
